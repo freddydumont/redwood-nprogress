@@ -1,167 +1,92 @@
-# TSDX React User Guide
+# redwood-nprogress
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Theme aware NProgress component to use in RedwoodJS apps using Emotion or ThemeUI.
 
-> This TSDX setup is meant for developing React components (not apps!) that can be published to NPM. If you’re looking to build an app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+This component is a fork of [`next-nprogress-emotion`](https://github.com/freddydumont/next-nprogress-emotion/) package. It was converted to use with RedwoodJS.
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+## Installation
 
-## Commands
-
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
-
-The recommended workflow is to run TSDX in one terminal:
-
-```
-npm start # or yarn start
+```bash
+yarn add redwood-nprogress
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+or
 
-Then run the example inside another:
-
-```
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+```bash
+npm install redwood-nprogress
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, [we use Parcel's aliasing](https://github.com/palmerhq/tsdx/pull/88/files).
+## Usage
 
-To do a one-off build, use `npm run build` or `yarn build`.
+### Component
 
-To run tests, use `npm test` or `yarn test`.
+Because this component relies on [`PageLoadingContext`](https://redwoodjs.com/docs/redwood-router#pageloadingcontext), it needs to be imported __under each route__.
 
-## Configuration
+It is thus recommended to use a [`layout`](https://redwoodjs.com/tutorial/layouts) to wrap each of your pages. For example:
 
-Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files) with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
-```
-
-#### React Testing Library
-
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
-
-### Rollup
-
-TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### Travis
-
-_to be completed_
-
-### Circle
-
-_to be completed_
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+Import the component inside your `layouts/GlobalLayout`;
 
 ```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
+import NProgress from 'redwood-nprogress'
 
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+const GlobalLayout = ({ children }) => {
+  return (
+    <>
+      <NProgress />
+      {children}
+    </>
+  )
 }
+
+export default GlobalLayout
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+Then wrap your pages in `<GlobalLayout>`:
 
-## Module Formats
+```javascript
+import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
-CJS, ESModules, and UMD module formats are supported.
+const HomePage = () => {
+  return (
+    <GlobalLayout>
+      {/* page content */}
+    </GlobalLayout>
+  )
+}
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Using the Playground
-
-```
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
-```
-
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**!
-
-## Deploying the Playground
-
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
-
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
+export default HomePage
 ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+If you're using ThemeUI, that's all you need to do. The component will use the primary color by default.
 
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
+You can change the color using a theme color or any css color:
+
+```jsx
+// using a theme color
+<NProgress color="accent" />
 ```
 
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using https://github.com/sindresorhus/np.
-
-## Usage with Lerna
-
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
-
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
-
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
-
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
+```jsx
+// using css
+<NProgress color="#fff" />
 ```
 
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+### Config
+
+The [page loading delay](https://redwoodjs.com/docs/redwood-router#pageloadingcontext) should be configured on Redwood Router itself:
+
+```javascript
+// Routes.js
+
+<Router pageLoadingDelay={300}>...</Router>
+```
+
+You can configure NProgress using its [configuration options](https://github.com/rstacruz/nprogress#configuration).
+
+```jsx
+<NProgress
+  color="#29d"
+  options={{ trickleSpeed: 50 }}
+  spinner
+/>
+```
