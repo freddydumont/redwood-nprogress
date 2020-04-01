@@ -1,6 +1,6 @@
 {
   "name": "redwood-nprogress",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "license": "MIT",
   "author": "Frederick Morin (https://freddydumont.com)",
   "description": "Theme aware NProgress component to use in RedwoodJS apps using Emotion or ThemeUI.",
@@ -28,7 +28,11 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint"
+    "lint": "tsdx lint",
+    "release": "np --no-tests"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "peerDependencies": {
     "@emotion/core": "^10.0.0",
@@ -55,6 +59,7 @@
     "@types/react-dom": "^16.9.5",
     "eslint-plugin-react-hooks": "^3.0.0",
     "husky": "^4.2.3",
+    "np": "^6.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "tsdx": "^0.13.1",
