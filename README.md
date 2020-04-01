@@ -71,6 +71,13 @@ You can change the color using a theme color or any css color:
 <NProgress color="#fff" />
 ```
 
+You can also display a small spinner with the `withSpinner` prop:
+
+```jsx
+// using css
+<NProgress withSpinner />
+```
+
 ### Config
 
 The [page loading delay](https://redwoodjs.com/docs/redwood-router#pageloadingcontext) should be configured on Redwood Router itself:
@@ -85,8 +92,6 @@ You can configure NProgress using its [configuration options](https://github.com
 
 ```jsx
 <NProgress
-  color="#29d"
   options={{ trickleSpeed: 50 }}
-  spinner
 />
 ```
