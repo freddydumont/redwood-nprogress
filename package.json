@@ -1,6 +1,6 @@
 {
   "name": "redwood-nprogress",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "author": "Frederick Morin (https://freddydumont.com)",
   "description": "Theme aware NProgress component to use in RedwoodJS apps using Emotion or ThemeUI.",
