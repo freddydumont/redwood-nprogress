@@ -74,7 +74,6 @@ You can change the color using a theme color or any css color:
 You can also display a small spinner with the `withSpinner` prop:
 
 ```jsx
-// using css
 <NProgress withSpinner />
 ```
 
