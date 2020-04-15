@@ -4,6 +4,10 @@ Theme aware NProgress component to use in RedwoodJS apps using Emotion or ThemeU
 
 This component is a fork of [`next-nprogress-emotion`](https://github.com/freddydumont/next-nprogress-emotion/) package. It was converted to use with RedwoodJS.
 
+## Demo
+
+![GIF Demo](.github/redwood-nprogress.gif)
+
 ## Installation
 
 ```bash
